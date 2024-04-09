@@ -1,5 +1,6 @@
 import {getSkey, request} from './HttpClient.js';
 
+
 /**
  * ViUR Shop Client (WIP)
  *
@@ -8,10 +9,49 @@ import {getSkey, request} from './HttpClient.js';
  */
 export class ViURShopClient {
 
-    api_url = '/shop/api';
+    /**
+     * URL to the shop-backend (ViUR server)
+     */
+    host_url;
 
-    constructor() {
-        const self = this;
+    /**
+     * Name of the shop root module
+     */
+    shop_module;
+
+    /**
+     * URL to shop root module with the default renderer
+     */
+    shop_url;
+
+    /**
+     * URL to shop root module with the json renderer
+     */
+    shop_json_url;
+
+    /**
+     * URL to shop API module with the default renderer
+     */
+    shop_api_url;
+
+    constructor({
+                    host_url = null,
+                    shop_module = 'shop',
+                } = {}) {
+        if (host_url === null) {
+            try {
+                this.host_url = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL : window.location.origin;
+            } catch (e) {
+                // The import crashes in a bundled runtime
+                this.host_url = window.location.origin;
+            }
+        } else {
+            this.host_url = host_url;
+        }
+        this.shop_module = shop_module;
+        this.shop_url = `${this.host_url}/${this.shop_module}`;
+        this.shop_json_url = `${this.host_url}/json/${this.shop_module}`;
+        this.shop_api_url = `${this.shop_url}/api`;
     }
 
 
@@ -21,7 +61,7 @@ export class ViURShopClient {
                      article_key,
                      parent_cart_key,
                  } = {}) {
-        return request(`${this.api_url}/article_view`, {
+        return request(`${this.shop_api_url}/article_view`, {
             params: {
                 'article_key': article_key,
                 'parent_cart_key': parent_cart_key,
@@ -37,7 +77,7 @@ export class ViURShopClient {
                     quantity = 1,
                     quantity_mode = 'increase',
                 } = {}) {
-        return request(`${this.api_url}/article_add`, {
+        return request(`${this.shop_api_url}/article_add`, {
             method: 'POST',
             params: {
                 article_key,
@@ -55,7 +95,7 @@ export class ViURShopClient {
                        quantity = 1,
                        quantity_mode = 'increase',
                    } = {}) {
-        return request(`${this.api_url}/article_update`, {
+        return request(`${this.shop_api_url}/article_update`, {
             method: 'POST',
             params: {
                 article_key,
@@ -78,7 +118,7 @@ export class ViURShopClient {
 
     cart_list({cart_key = null} = {}) {
         const self = this;
-        return request(`${this.api_url}/cart_list`, {
+        return request(`${this.shop_api_url}/cart_list`, {
             params: cart_key === null ? {} : {cart_key},
         })
             .then(req => req.json())
@@ -93,7 +133,7 @@ export class ViURShopClient {
                  shipping_key,
                  discount_key,
              } = {}) {
-        return request(`${this.api_url}/cart_add`, {
+        return request(`${this.shop_api_url}/cart_add`, {
             method: 'POST',
             params: this.removeUndefinedValues({
                 parent_cart_key,
@@ -119,7 +159,7 @@ export class ViURShopClient {
                     shipping_key,
                     discount_key,
                 } = {}) {
-        return request(`${this.api_url}/cart_update`, {
+        return request(`${this.shop_api_url}/cart_update`, {
             method: 'POST',
             params: this.removeUndefinedValues({
                 cart_key,
@@ -136,7 +176,7 @@ export class ViURShopClient {
     }
 
     cart_remove({cart_key} = {}) {
-        return request(`${this.api_url}/cart_remove`, {
+        return request(`${this.shop_api_url}/cart_remove`, {
             method: 'POST',
             params: {
                 cart_key,
@@ -149,7 +189,7 @@ export class ViURShopClient {
 
     address_list({} = {}) {
         const self = this;
-        return request(`/json/shop/address/list`, {
+        return request(`${this.shop_json_url}/address/list`, {
             params: {
                 limit: 100,
             },
@@ -176,7 +216,7 @@ export class ViURShopClient {
                 } = {}) {
         return getSkey()
             .then(skey => {
-                return request(`/json/shop/address/add`, {
+                return request(`${this.shop_json_url}/address/add`, {
                     method: 'POST',
                     params: this.removeUndefinedValues({
                         skey,
@@ -205,7 +245,7 @@ export class ViURShopClient {
     // --- Order --------------------------------------------------------------
 
     payment_providers_list({} = {}) {
-        return request(`${this.api_url}/../order/payment_providers_list`)
+        return request(`${this.shop_url}/order/payment_providers_list`)
             .then(req => req.json())
     }
 
@@ -219,7 +259,7 @@ export class ViURShopClient {
                   state_paid,
                   state_rts,
               } = {}) {
-        return request(`${this.api_url}/order_add`, {
+        return request(`${this.shop_api_url}/order_add`, {
             method: 'POST',
             params: this.removeUndefinedValues({
                 cart_key,
@@ -245,7 +285,7 @@ export class ViURShopClient {
                      state_paid,
                      state_rts,
                  } = {}) {
-        return request(`${this.api_url}/order_update`, {
+        return request(`${this.shop_api_url}/order_update`, {
             method: 'POST',
             params: this.removeUndefinedValues({
                 order_key,
@@ -264,7 +304,7 @@ export class ViURShopClient {
     order_checkout_start({
                              order_key,
                          } = {}) {
-        return request(`${this.api_url}/../order/checkout_start`, {
+        return request(`${this.shop_url}/order/checkout_start`, {
             method: 'POST',
             params: {order_key},
         })
@@ -274,7 +314,7 @@ export class ViURShopClient {
     order_checkout_order({
                              order_key,
                          } = {}) {
-        return request(`${this.api_url}/../order/checkout_order`, {
+        return request(`${this.shop_url}/order/checkout_order`, {
             method: 'POST',
             params: {order_key},
         })
@@ -284,7 +324,7 @@ export class ViURShopClient {
     order_pp_get_settings({
                               order_key,
                           } = {}) {
-        return request(`${this.api_url}/../order/checkout_order`, {
+        return request(`${this.shop_url}/order/checkout_order`, {
             method: 'POST',
             params: {order_key},
         })
@@ -297,7 +337,7 @@ export class ViURShopClient {
     user_view({
                   user_key = 'self',
               } = {}) {
-        return request(`/vi/user/view/${user_key}`)
+        return request(`${this.host_url}/json/user/view/${user_key}`)
             .then(req => req.json())
             .then(response => response.values);
     }
@@ -309,7 +349,7 @@ export class ViURShopClient {
                      code,
                      discount_key,
                  } = {}) {
-        return request(`${this.api_url}/discount_add`, {
+        return request(`${this.shop_api_url}/discount_add`, {
             method: 'POST',
             params: this.removeUndefinedValues({
                 code,
