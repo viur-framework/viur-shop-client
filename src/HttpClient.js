@@ -26,6 +26,7 @@ function request(url, {json, method, params, ...customConfig} = {}) {
         method = json ? 'POST' : 'GET'
     }
     const config = {
+        credentials: 'include',
         method: method,
         headers: {
             'X-Requested-With': 'Fetch',
