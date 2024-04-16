@@ -23,7 +23,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - name: Copy README.md to src
         run: |
-          cp README.md src/
+          cp ../README.md ./
       - run: npm ci
       - name: Publish npm package
         run: npm publish
