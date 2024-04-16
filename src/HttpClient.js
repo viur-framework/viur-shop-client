@@ -29,10 +29,14 @@ function request(url, {json, method, params, ...customConfig} = {}) {
         credentials: 'include',
         method: method,
         headers: {
-            'X-Requested-With': 'Fetch',
             ...customConfig.headers,
         },
         ...customConfig,
+    }
+    if (url.startsWith('/') || url.startsWith(window.location.origin)) {
+        // TODO: Additional headers causes CORS problems
+        //  and preflight OPTION requests are not working with the current viur-core
+        config.headers['X-Requested-With'] = 'Fetch';
     }
     if (json) {
         config.body = JSON.stringify(json);
