@@ -21,6 +21,9 @@ jobs:
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
+      - name: Copy README.md to src
+        run: |
+          cp README.md src/
       - run: npm ci
       - name: Publish npm package
         run: npm publish
@@ -37,9 +40,6 @@ jobs:
       - name: debug
         run: |
           echo "${{ contains(github.ref_name, 'dev') }}"
-      - name: Copy README.md to src
-        run: |
-          cp README.md src/
       - name: Release
         uses: softprops/action-gh-release@v1
         # if: "!startsWith(github.ref_name, 'v-test-')"
