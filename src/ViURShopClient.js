@@ -108,9 +108,18 @@ export class ViURShopClient {
     }
 
 
-    //TODO
-    article_remove({} = {}) {
-        throw Error('Not implemented');
+    article_remove({
+                       article_key,
+                       parent_cart_key,
+                   } = {}) {
+        return request(`${this.shop_api_url}/article_remove`, {
+            method: 'POST',
+            params: {
+                article_key,
+                parent_cart_key,
+            },
+        })
+            .then(req => req.json())
     }
 
 
