@@ -196,7 +196,7 @@ export class ViURShopClient {
     }
 
     cart_structure() {
-        return request(`${this.getStructure_url}/shop.cart`, {
+        return request(`${this.getStructure_url}/${this.shop_module}.cart`, {
             method: 'GET',
         })
             .then(req => req.json())
@@ -260,7 +260,7 @@ export class ViURShopClient {
     }
 
     address_structure() {
-        return request(`${this.getStructure_url}/shop.address`, {
+        return request(`${this.getStructure_url}/${this.shop_module}.address`, {
             method: 'GET',
         })
             .then(req => req.json())
