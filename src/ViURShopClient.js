@@ -52,6 +52,7 @@ export class ViURShopClient {
         this.shop_url = `${this.host_url}/${this.shop_module}`;
         this.shop_json_url = `${this.host_url}/json/${this.shop_module}`;
         this.shop_api_url = `${this.shop_url}/api`;
+        this.getStructure_url = `${this.host_url}/vi/getStructure` 
     }
 
 
@@ -194,6 +195,13 @@ export class ViURShopClient {
             .then(req => req.json())
     }
 
+    cart_structure() {
+        return request(`${this.getStructure_url}/shop.cart`, {
+            method: 'GET',
+        })
+            .then(req => req.json())
+    }
+
     // --- Address ------------------------------------------------------------
 
     address_list({} = {}) {
@@ -249,6 +257,13 @@ export class ViURShopClient {
                     .then(response => response.values)
 
             });
+    }
+
+    address_structure() {
+        return request(`${this.getStructure_url}/shop.address`, {
+            method: 'GET',
+        })
+            .then(req => req.json())
     }
 
     // --- Order --------------------------------------------------------------
