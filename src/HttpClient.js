@@ -69,7 +69,7 @@ function request(url, {json, method, params, ...customConfig} = {}) {
     return window
         .fetch(url, config)
         .then(async response => {
-            if (response.ok) {
+            if (response.ok || (config.mode === 'no-cors' && response.type === 'opaque')) {
                 return response
             } else {
                 const errorMessage = `${response.status} ${response.statusText}: ${response.headers.get('x-viur-error')}`
