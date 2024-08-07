@@ -7,6 +7,10 @@ import {
 import {
     ViURShopClient,
 } from './ViURShopClient.js'
+import {
+    CartType,
+    CustomerType,
+} from './types.js';
 
 export {
     HTTPError,
@@ -14,4 +18,6 @@ export {
     getSkey,
     errorHandler,
     ViURShopClient,
+    CartType,
+    CustomerType,
 }
