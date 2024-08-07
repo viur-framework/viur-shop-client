@@ -125,10 +125,21 @@ export class ViURShopClient {
 
     // --- Basket ---------------------------------------------------------------
     basket_list() {
-      return request(`${this.shop_api_url}/basket_list`).then(req => req.json());
+        return request(`${this.shop_api_url}/basket_list`).then(req => req.json());
     }
+
     // --- Cart ---------------------------------------------------------------
 
+    /**
+     * List root nodes or children of a cart
+     *
+     * If a cart key is provided, the direct children (nodes and leafs) will
+     * be returned.
+     * Otherwise (without a key), the root nodes will be returned.
+     *
+     * @param {string} cart_key list direct children (nodes and leafs) of this parent node
+     * @returns {Promise<Response>}
+     */
     cart_list({cart_key = null} = {}) {
         const self = this;
         return request(`${this.shop_api_url}/cart_list`, {
@@ -137,10 +148,22 @@ export class ViURShopClient {
             .then(req => req.json())
     }
 
+    /**
+     * Add a new cart node
+     *
+     * @param {string} parent_cart_key Key of the parent cart
+     * @param {CartType} cart_type Type of the cart node, see `CartType`
+     * @param {string=} name Optional. Name of the cart node
+     * @param {string=} customer_comment Optional. Comment to this node, by customer.
+     * @param {string=} shipping_address_key Optional. Key of the address
+     * @param {string=} shipping_key Optional. Key of the shipping
+     * @param {string=} discount_key Optional. Key of the discount
+     * @returns {Promise<Response>}
+     */
     cart_add({
                  parent_cart_key,
+                 cart_type,
                  name,
-                 cart_type, // TODO
                  customer_comment,
                  shipping_address_key,
                  shipping_key,
@@ -151,7 +174,7 @@ export class ViURShopClient {
             params: this.removeUndefinedValues({
                 parent_cart_key,
                 name,
-                cart_type, // TODO
+                cart_type,
                 customer_comment,
                 shipping_address_key,
                 shipping_key,
@@ -161,11 +184,21 @@ export class ViURShopClient {
             .then(req => req.json())
     }
 
-    //TODO
+    /**
+     * Update an existing cart node
+     *
+     * @param {string} cart_key Key of the cart node to be updated
+     * @param {CartType} cart_type Type of the cart node, see `CartType`
+     * @param {string=} name Optional. Name of the cart node
+     * @param {string=} customer_comment Optional. Comment to this node, by customer.
+     * @param {string=} shipping_address_key Optional. Key of the address
+     * @param {string=} shipping_key Optional. Key of the shipping
+     * @param {string=} discount_key Optional. Key of the discount
+     * @returns {Promise<Response>}
+     */
     cart_update({
                     cart_key,
-                    parent_cart_key,
-                    cart_type, // TODO
+                    cart_type,
                     name,
                     customer_comment,
                     shipping_address_key,
@@ -176,8 +209,7 @@ export class ViURShopClient {
             method: 'POST',
             params: this.removeUndefinedValues({
                 cart_key,
-                parent_cart_key,
-                cart_type, // TODO
+                cart_type,
                 name,
                 customer_comment,
                 shipping_address_key,
@@ -188,6 +220,13 @@ export class ViURShopClient {
             .then(req => req.json())
     }
 
+    /**
+     * Remove a cart node.
+     * Removes itself and all children
+     *
+     * @param {string} cart_key Key of the cart node to be removed
+     * @returns {Promise<Response>}
+     */
     cart_remove({cart_key} = {}) {
         return request(`${this.shop_api_url}/cart_remove`, {
             method: 'POST',
