@@ -68,7 +68,7 @@ export class ViURShopClient {
                 'parent_cart_key': parent_cart_key,
             },
         })
-            .then(req => req.json())
+            .then(req => req.json());
     }
 
 
@@ -87,7 +87,7 @@ export class ViURShopClient {
                 quantity_mode,
             },
         })
-            .then(req => req.json())
+            .then(req => req.json());
     }
 
     article_update({
@@ -105,7 +105,7 @@ export class ViURShopClient {
                 quantity_mode,
             },
         })
-            .then(req => req.json())
+            .then(req => req.json());
     }
 
 
@@ -120,7 +120,7 @@ export class ViURShopClient {
                 parent_cart_key,
             },
         })
-            .then(req => req.json())
+            .then(req => req.json());
     }
 
     // --- Basket ---------------------------------------------------------------
@@ -145,7 +145,7 @@ export class ViURShopClient {
         return request(`${this.shop_api_url}/cart_list`, {
             params: cart_key === null ? {} : {cart_key},
         })
-            .then(req => req.json())
+            .then(req => req.json());
     }
 
     /**
@@ -181,7 +181,7 @@ export class ViURShopClient {
                 discount_key,
             }),
         })
-            .then(req => req.json())
+            .then(req => req.json());
     }
 
     /**
@@ -217,7 +217,7 @@ export class ViURShopClient {
                 discount_key,
             }),
         })
-            .then(req => req.json())
+            .then(req => req.json());
     }
 
     /**
@@ -234,14 +234,14 @@ export class ViURShopClient {
                 cart_key,
             },
         })
-            .then(req => req.json())
+            .then(req => req.json());
     }
 
     cart_structure() {
         return request(`${this.getStructure_url}/${this.shop_module}.cart`, {
             method: 'GET',
         })
-            .then(req => req.json())
+            .then(req => req.json());
     }
 
     // --- Address ------------------------------------------------------------
@@ -254,7 +254,7 @@ export class ViURShopClient {
             },
         })
             .then(req => req.json())
-            .then(response => response.skellist)
+            .then(response => response.skellist);
     }
 
     address_add({
@@ -296,8 +296,7 @@ export class ViURShopClient {
                     }),
                 })
                     .then(req => req.json())
-                    .then(response => response.values)
-
+                    .then(response => response.values);
             });
     }
 
@@ -305,14 +304,14 @@ export class ViURShopClient {
         return request(`${this.getStructure_url}/${this.shop_module}.address`, {
             method: 'GET',
         })
-            .then(req => req.json())
+            .then(req => req.json());
     }
 
     // --- Order --------------------------------------------------------------
 
     payment_providers_list({} = {}) {
         return request(`${this.shop_url}/order/payment_providers_list`)
-            .then(req => req.json())
+            .then(req => req.json());
     }
 
     order_add({
@@ -338,7 +337,7 @@ export class ViURShopClient {
                 state_rts,
             }),
         })
-            .then(req => req.json())
+            .then(req => req.json());
     }
 
     order_update({
@@ -364,7 +363,7 @@ export class ViURShopClient {
                 state_rts,
             }),
         })
-            .then(req => req.json())
+            .then(req => req.json());
     }
 
     order_checkout_start({
@@ -374,7 +373,7 @@ export class ViURShopClient {
             method: 'POST',
             params: {order_key},
         })
-            .then(req => req.json())
+            .then(req => req.json());
     }
 
     order_checkout_order({
@@ -384,7 +383,7 @@ export class ViURShopClient {
             method: 'POST',
             params: {order_key},
         })
-            .then(req => req.json())
+            .then(req => req.json());
     }
 
     order_pp_get_settings({
@@ -394,7 +393,7 @@ export class ViURShopClient {
             method: 'POST',
             params: {order_key},
         })
-            .then(req => req.json())
+            .then(req => req.json());
     }
 
 
@@ -422,7 +421,7 @@ export class ViURShopClient {
                 discount_key,
             }),
         })
-            .then(req => req.json())
+            .then(req => req.json());
     }
 
 
