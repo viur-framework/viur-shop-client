@@ -19,6 +19,8 @@ ij_smart_tabs = false
 ij_visual_guides = 80,120
 ij_wrap_on_typing = false
 
+[*.{css,less,yml,yaml,json}]
+indent_size = 2
 
 [*.md]
 insert_final_newline = false
