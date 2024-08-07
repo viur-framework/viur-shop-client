@@ -1,5 +1,8 @@
 <div align="center">
     <h1>ViUR Shop JS Client</h1>
+    <a href="https://viur-framework.github.io/viur-shop-client/">
+        <img alt="Badge showing GitHub pages documentation build" title="PyPI" src="https://github.com/viur-framework/viur-shop-client/actions/workflows/docs.yml/badge.svg">
+    </a>
     <a href="https://www.npmjs.com/package/@viur/viur-shop-client">
         <img alt="Badge showing current NPM version" title="PyPI" src="https://img.shields.io/npm/v/@viur/viur-shop-client">
     </a>
@@ -42,7 +45,7 @@ This package is provided in these module formats:
 
 ## Documentation
 
-You can find documentation currently only in the code (WIP).
+You can find the documentation at [viur-framework.github.io/viur-shop-client](https://viur-framework.github.io/viur-shop-client/) (WIP).  
 We're following [JSDoc](https://jsdoc.app/).
 
 
