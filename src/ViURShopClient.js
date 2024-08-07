@@ -52,7 +52,7 @@ export class ViURShopClient {
         this.shop_url = `${this.host_url}/${this.shop_module}`;
         this.shop_json_url = `${this.host_url}/json/${this.shop_module}`;
         this.shop_api_url = `${this.shop_url}/api`;
-        this.getStructure_url = `${this.host_url}/vi/getStructure`
+        this.getStructure_url = `${this.host_url}/vi/getStructure`;
     }
 
 
@@ -125,8 +125,7 @@ export class ViURShopClient {
 
     // --- Basket ---------------------------------------------------------------
     basket_list() {
-      return request(`${this.shop_api_url}/basket_list`)
-        .then(req => req.json())
+      return request(`${this.shop_api_url}/basket_list`).then(req => req.json());
     }
     // --- Cart ---------------------------------------------------------------
 
