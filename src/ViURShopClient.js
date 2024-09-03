@@ -1,11 +1,9 @@
 import {getSkey, request} from './HttpClient.js';
 
+// Note: Order of functions should always be RCUD (this is NOT a typo of CRUD!)
 
 /**
- * ViUR Shop Client (WIP)
- *
- * Order of functions should always be RCUD (this is NOT a typo of CRUD!)
- *
+ * ViUR Shop Client
  */
 export class ViURShopClient {
 
