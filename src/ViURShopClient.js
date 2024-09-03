@@ -1,11 +1,9 @@
 import {getSkey, request} from './HttpClient.js';
 
+// Note: Order of functions should always be RCUD (this is NOT a typo of CRUD!)
 
 /**
- * ViUR Shop Client (WIP)
- *
- * Order of functions should always be RCUD (this is NOT a typo of CRUD!)
- *
+ * ViUR Shop Client
  */
 export class ViURShopClient {
 
@@ -420,6 +418,24 @@ export class ViURShopClient {
                 code,
                 discount_key,
             }),
+        })
+            .then(req => req.json());
+    }
+
+
+    // --- Shipping -----------------------------------------------------------
+
+    /**
+     * Lists available shipping options for a (sub)cart
+     * @param {string} cart_key Key of the parent cart
+     * @returns {Promise<Response>} L
+     */
+    shipping_list({
+                      cart_key,
+                  } = {}) {
+        return request(`${this.shop_api_url}/shipping_list`, {
+            method: 'GET',
+            params: {cart_key},
         })
             .then(req => req.json());
     }
