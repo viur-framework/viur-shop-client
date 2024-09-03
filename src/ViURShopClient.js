@@ -425,6 +425,24 @@ export class ViURShopClient {
     }
 
 
+    // --- Shipping -----------------------------------------------------------
+
+    /**
+     * Lists available shipping options for a (sub)cart
+     * @param {string} cart_key Key of the parent cart
+     * @returns {Promise<Response>} L
+     */
+    shipping_list({
+                      cart_key,
+                  } = {}) {
+        return request(`${this.shop_api_url}/shipping_list`, {
+            method: 'GET',
+            params: {cart_key},
+        })
+            .then(req => req.json());
+    }
+
+
     // --- Utils -------------------------------------------------------------
 
     removeUndefinedValues(obj) {
