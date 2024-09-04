@@ -428,7 +428,7 @@ export class ViURShopClient {
     /**
      * Lists available shipping options for a (sub)cart
      * @param {string} cart_key Key of the parent cart
-     * @returns {Promise<Response>} L
+     * @returns {Promise<Response>} List of ShippingsSkels
      */
     shipping_list({
                       cart_key,
