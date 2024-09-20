@@ -422,6 +422,18 @@ export class ViURShopClient {
             .then(req => req.json());
     }
 
+    discount_remove({
+                        discount_key,
+                    } = {}) {
+        return request(`${this.shop_api_url}/discount_remove`, {
+            method: 'POST',
+            params: this.removeUndefinedValues({
+                discount_key,
+            }),
+        })
+            .then(req => req.json());
+    }
+
 
     // --- Shipping -----------------------------------------------------------
 
