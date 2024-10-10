@@ -407,7 +407,12 @@ export class ViURShopClient {
 
 
     // --- Discount -----------------------------------------------------------
-
+    /**
+     * Add a Discount to the current Cart.
+     * @param {string} code Human readable Discount Code
+     * @param {string} discount_key Database Key from a Discount.
+     * @returns {Response<Response>}
+     */
     discount_add({
                      code,
                      discount_key,
@@ -418,6 +423,21 @@ export class ViURShopClient {
                 code,
                 discount_key,
             }),
+        })
+            .then(req => req.json());
+    }
+
+    /**
+     * Removes a Discount by the Database Key
+     * @param {string} discount_key Database Key from a Discount.
+     * @returns {Promise<Response>}
+     */
+    discount_remove({
+                        discount_key,
+                    } = {}) {
+        return request(`${this.shop_api_url}/discount_remove`, {
+            method: 'POST',
+            params: {discount_key},
         })
             .then(req => req.json());
     }
