@@ -446,7 +446,7 @@ export class ViURShopClient {
     // --- Shipping -----------------------------------------------------------
 
     /**
-     * Lists available shipping options for a (sub)cart
+     * Lists  shipping options for a (sub)cart
      * @param {string} cart_key Key of the parent cart
      * @returns {Promise<Response>} List of ShippingsSkels
      */
@@ -455,7 +455,48 @@ export class ViURShopClient {
                   } = {}) {
         return request(`${this.shop_api_url}/shipping_list`, {
             method: 'GET',
-            params: {cart_key},
+            params: this.removeUndefinedValues({
+                cart_key,
+            })
+        })
+            .then(req => req.json());
+    }
+
+    /**
+     * Lists available shipping options for a (sub)cart
+     * @param {string} cart_key Key of the parent cart
+     * @returns {Promise<Response>} List of ShippingsSkels
+     */
+    shipping_available_list({
+                                cart_key,
+                            } = {}) {
+        return request(`${this.shop_api_url}/shipping_available_list`, {
+            method: 'GET',
+            params: this.removeUndefinedValues({
+                cart_key,
+            })
+        })
+            .then(req => req.json());
+    }
+
+    /**
+     * Set the shipping for the cart.
+     * If no shipping key is set the cheapest will be added.
+     * If no cart key is set the current cart will be used.
+     * @param {string} cart_key Key of Cart
+     * @param {string} shipping_key Key of the shipping
+     * @returns {Promise<Response>} List of ShippingsSkels
+     */
+    shipping_set({
+                     cart_key,
+                     shipping_key,
+                 } = {}) {
+        return request(`${this.shop_api_url}/shipping_set`, {
+            method: 'GET',
+            params: this.removeUndefinedValues({
+                cart_key,
+                shipping_key,
+            }),
         })
             .then(req => req.json());
     }
