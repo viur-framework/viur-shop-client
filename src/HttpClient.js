@@ -75,6 +75,9 @@ function request(url, {json, method, params, ...customConfig} = {}) {
                 const errorMessage = `${response.status} ${response.statusText}: ${response.headers.get('x-viur-error')}`
                 return Promise.reject(new HTTPError(response.status, response.statusText, errorMessage, response))
             }
+        }).catch((error) => {
+            const errorMessage = `${error.statusCode} ${error.statusText}: ${error.response.headers.get('x-viur-error')}`
+            return Promise.reject(new HTTPError(error.statusCode, error.statusText, errorMessage, error))
         })
 }
 
