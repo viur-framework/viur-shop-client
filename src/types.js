@@ -84,7 +84,7 @@ export const CustomerGroup = Object.freeze({
 export const DiscountType = Object.freeze({
     PERCENTAGE: 'percentage',  // Percentage discount
     ABSOLUTE: 'absolute',  // Absolute discount
-    FREE_ARTICLE: 'free_article',  // Free article (e.g., cart easter egg)
+    FREE_ARTICLE: 'free_article',  // Free article (and cart easter egg)
     FREE_SHIPPING: 'free_shipping',  // Free shipping
 });
 
