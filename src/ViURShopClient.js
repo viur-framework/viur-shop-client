@@ -1,4 +1,5 @@
 import {getSkey, request} from './HttpClient.js';
+import {QuantityMode} from './types.js';
 
 // Note: Order of functions should always be RCUD (this is NOT a typo of CRUD!)
 
@@ -74,7 +75,7 @@ export class ViURShopClient {
                     article_key,
                     parent_cart_key,
                     quantity = 1,
-                    quantity_mode = 'increase',
+                    quantity_mode = QuantityMode.INCREASE,
                 } = {}) {
         return request(`${this.shop_api_url}/article_add`, {
             method: 'POST',
@@ -92,7 +93,7 @@ export class ViURShopClient {
                        article_key,
                        parent_cart_key,
                        quantity = 1,
-                       quantity_mode = 'increase',
+                       quantity_mode = QuantityMode.INCREASE,
                    } = {}) {
         return request(`${this.shop_api_url}/article_update`, {
             method: 'POST',
