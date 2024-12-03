@@ -122,11 +122,6 @@ export class ViURShopClient {
             .then(req => req.json());
     }
 
-    // --- Basket ---------------------------------------------------------------
-    basket_list() {
-        return request(`${this.shop_api_url}/basket_list`).then(req => req.json());
-    }
-
     // --- Cart ---------------------------------------------------------------
 
     /**
@@ -236,6 +231,26 @@ export class ViURShopClient {
             .then(req => req.json());
     }
 
+    /**
+     * List the children of the basket (the cart stored in the session)
+     *
+     * @returns {Promise<Response>}
+     */
+    basket_list() {
+        return request(`${this.shop_api_url}/basket_list`)
+            .then(req => req.json());
+    }
+
+    /**
+     * View the basket (the cart stored in the session) itself
+     *
+     * @returns {Promise<Response>}
+     */
+    basket_view() {
+        return request(`${this.shop_api_url}/basket_view`)
+           .then(req => req.json());
+    }
+
     cart_structure() {
         return request(`${this.getStructure_url}/${this.shop_module}.cart`, {
             method: 'GET',
@@ -308,7 +323,24 @@ export class ViURShopClient {
 
     // --- Order --------------------------------------------------------------
 
-    payment_providers_list({} = {}) {
+
+    /**
+     * Get a list of payment providers.
+     *
+     * This API method returns a JSON response containing a object of
+     * payment providers. The keys in the response represent provider
+     * identifiers, and the values are objects describing the details of
+     * each provider.
+     *
+     * @param {boolean} [onlyAvailable=true] -
+     *     If true, only payment providers that are currently available
+     *     will be included in the response. If false, all providers will
+     *     be listed regardless of availability.
+     * @returns {Promise<Response>}
+     */
+    payment_providers_list({
+        only_available = true,
+    } = {}) {
         return request(`${this.shop_url}/order/payment_providers_list`)
             .then(req => req.json());
     }
@@ -365,6 +397,40 @@ export class ViURShopClient {
             .then(req => req.json());
     }
 
+    /**
+     * List the orders of the current user
+     * @param {object} param Any key-value pairs for filtering or ordering
+     * @returns {Promise<Response>}
+     */
+    order_list(param = {}) {
+        return request(`${this.shop_url}/api/order_list`, {
+            method: 'GET',
+            params,
+        })
+            .then(req => req.json());
+    }
+
+    /**
+     * View an order
+     * @param {String} order_key Key of the order to view.
+     *                           Use "SESSION" as key to view the order of the current session
+     * @returns {Promise<Response>}
+     */
+    order_view({
+        order_key = 'SESSION',
+    } = {}) {
+        return request(`${this.shop_url}/api/order_view`, {
+            method: 'GET',
+            params: {order_key},
+        })
+            .then(req => req.json());
+    }
+
+    /**
+     * Start the checkout process
+     * @param {String} key The key of the order
+     * @returns {Promise<Response>}
+     */
     order_checkout_start({
                              order_key,
                          } = {}) {
@@ -375,6 +441,11 @@ export class ViURShopClient {
             .then(req => req.json());
     }
 
+    /**
+     * The final order now step
+     * @param {String} key The key of the order
+     * @returns {Promise<Response>}
+     */
     order_checkout_order({
                              order_key,
                          } = {}) {
@@ -384,17 +455,6 @@ export class ViURShopClient {
         })
             .then(req => req.json());
     }
-
-    order_pp_get_settings({
-                              order_key,
-                          } = {}) {
-        return request(`${this.shop_url}/order/checkout_order`, {
-            method: 'POST',
-            params: {order_key},
-        })
-            .then(req => req.json());
-    }
-
 
     // --- User ---------------------------------------------------------------
 
